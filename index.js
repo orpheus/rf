@@ -50,9 +50,7 @@ function createComponent({ type: payload, name }) {
   const fileEncoding = { encoding: 'utf-8', flag: 'rs' };
 
   return new Promise(resolve => {
-    console.log(`Creating payload: ${payload}`);
-    console.log(`Naming payload: ${name}\n`)
-    console.log(path.join(__dirname, `/payloads/${payload}`))
+    console.log(chalk.yellow(`Creating ${payload}-template: ${name}`))
     // make the initial parent directory
     try {
       execSync(`mkdir ${name}`);
