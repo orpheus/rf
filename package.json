@@ -1,9 +1,9 @@
 {
-  "name": "template",
+  "name": "rf",
   "version": "1.2.0",
-  "description": "File template CLI",
+  "description": "React Template Generator CLI",
   "main": "index.js",
-  "author": "Richard van Hees",
+  "author": "ohryan",
   "license": "ISC",
   "dependencies": {
     "babel-cli": "^6.26.0",
