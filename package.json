@@ -1,6 +1,6 @@
 {
   "name": "rf",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "React Template Generator CLI",
   "main": "index.js",
   "author": "ohryan",

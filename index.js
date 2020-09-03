@@ -30,6 +30,12 @@ const initTemplateModule = async () => {
     let name = options._[1];
 
     if (!options._.length) reject(`\nNo arguments found. Run ${chalk.blue(`${commandUsed} --help`)} for more information.\n`);
+
+    // default naming for rsm payload
+    if (type === 'rsm' && !name) {
+      name = 'StateManager'
+    }
+
     // if no payload type was specified, default to 'main'
     if (!payloads[type]) {
       name = type

@@ -17,5 +17,9 @@ If no `<template_name>` is supplied, it will default to the `main` template
 At this moment the following templates are available:
 
 #### main ####
-**Command**: `rf main Test`\
+**Command**: `rf main Component`\
 **Description**: A basic react functional component with material-ui style integration and index default export
+
+#### rsm ####
+**Command**: `rf rsm StateManager`\
+**Description**: A payload consisting of a redux reducer, actions, selectors, and helpers to manager async states in redux
