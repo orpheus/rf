@@ -1,0 +1,24 @@
+{
+  "name": "template",
+  "version": "1.2.0",
+  "description": "File template CLI",
+  "main": "index.js",
+  "author": "Richard van Hees",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "chalk": "^3.0.0",
+    "change-case": "^3.0.1",
+    "child_process": "^1.0.2",
+    "fs": "^0.0.1-security",
+    "minimist": "^1.2.0",
+    "path": "^0.12.7",
+    "prompt-confirm": "^2.0.4",
+    "ramda": "^0.27.0",
+    "settings-store": "^1.4.1"
+  },
+  "bin": {
+    "template": "./index.js",
+    "rt": "./index.js"
+  }
+}
