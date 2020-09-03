@@ -10,6 +10,9 @@
 Run `rf <template_name> <component_name>`. 
 - The templates can be found below.
 
+If no `<template_name>` is supplied, it will default to the `main` template
+-  `rf <component_name>` 
+
 ### Available templates Payloads
 At this moment the following templates are available:
 

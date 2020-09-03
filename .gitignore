@@ -2,3 +2,5 @@
 /.idea/
 /node_modules/
 /test/
+# make sure we don't commmit a package-lock. use yarn.lock
+/package-lock.json

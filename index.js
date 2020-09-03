@@ -26,12 +26,15 @@ const initTemplateModule = async () => {
   if (options.config || options._[0] === 'config') await configFunc();
 
   return new Promise((resolve, reject) => {
-    const type = options._[0];
-    const name = options._[1];
+    let type = options._[0];
+    let name = options._[1];
 
     if (!options._.length) reject(`\nNo arguments found. Run ${chalk.blue(`${commandUsed} --help`)} for more information.\n`);
-    if (!name) reject(`\nUsage: ${chalk.blue(`${commandUsed} \<template name\> \<element name\>`)}\nRun ${chalk.blue(`${commandUsed} --help`)} for more information.\n`);
-    if (!payloads[type]) reject(`\nTemplate ${type} does not exist.\nRun ${chalk.blue(`${commandUsed} -ls`)} for all templates.\n`);
+    // if no payload type was specified, default to 'main'
+    if (!payloads[type]) {
+      name = type
+      type = 'main'
+    }
 
     resolve({ type, name });
   });
