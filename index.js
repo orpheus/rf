@@ -8,7 +8,7 @@ const changeCase = require('change-case');
 const settings = require('settings-store');
 const chalk = require('chalk');
 
-const filePackages = require('./file_packages');
+const payloads = require('./payloads');
 const { listFunc, readmeFunc, versionFunc, configFunc } = require('./lib');
 const getCommand = require('./lib/get-command');
 const setDefaults = require('./lib/set-defaults');
@@ -16,9 +16,8 @@ const setDefaults = require('./lib/set-defaults');
 // Settings
 settings.init({ appName: "React Template Engine", reverseDNS: "com.bar.foo" });
 setDefaults();
-settings.setValue("commandUsed", getCommand());
+settings.setValue("commandUsed", getCommand(), false);
 const commandUsed = settings.value('commandUsed');
-const isUsingHooks = settings.value('hooks');
 
 const initTemplateModule = async () => {
   if (options.list || options.ls || (options.l && options.s)) await listFunc();
@@ -32,39 +31,53 @@ const initTemplateModule = async () => {
 
     if (!options._.length) reject(`\nNo arguments found. Run ${chalk.blue(`${commandUsed} --help`)} for more information.\n`);
     if (!name) reject(`\nUsage: ${chalk.blue(`${commandUsed} \<template name\> \<element name\>`)}\nRun ${chalk.blue(`${commandUsed} --help`)} for more information.\n`);
-    if (!filePackages[type]) reject(`\nTemplate ${type} does not exist.\nRun ${chalk.blue(`${commandUsed} -ls`)} for all templates.\n`);
-    if (isUsingHooks && !filePackages[type].hasHooks) reject(`\nTemplate ${type} does not support hooks.\n`);
+    if (!payloads[type]) reject(`\nTemplate ${type} does not exist.\nRun ${chalk.blue(`${commandUsed} -ls`)} for all templates.\n`);
 
     resolve({ type, name });
   });
 };
 
-function createComponent({ type, name }) {
+function createComponent({ type: payload, name }) {
   const fileEncoding = { encoding: 'utf-8', flag: 'rs' };
-  const newType = isUsingHooks ? `${type}-hooks` : type;
 
   return new Promise(resolve => {
-    console.log(`Creating ${type} ${name}${isUsingHooks ? ' with hooks' : ''}...`);
+    console.log(`Creating payload: ${payload}`);
+    console.log(`Naming payload: ${name}\n`)
+    console.log(path.join(__dirname, `/payloads/${payload}`))
+    // make the initial parent directory
+    try {
+      execSync(`mkdir ${name}`);
+    } catch (err) {
+      console.log(chalk.red(`Directory already exists: ${name}. Overwriting...`))
+    }
 
-    fs.readdirSync(path.join(__dirname, `/file_package_repo/${newType}`)).forEach((file, i) => {
+    fs.readdirSync(path.join(__dirname, `/payloads/${payload}`)).forEach((file, i) => {
       const pascalName = changeCase.pascalCase(name);
       const camelName = changeCase.camelCase(name);
       const kebabName = changeCase.paramCase(name);
-      if (!i) execSync(`mkdir ${name}`);
+
+      console.log(chalk.blue(`Building: ${file.replace(/\$NAME\$/g, pascalName)} ${i}`))
+
+      // if folder in payload, create the folder
       const isFolder = file.lastIndexOf('.') === -1;
+      if (isFolder) execSync(`mkdir ${pascalName}/${file.replace(/\$NAME\$/g, pascalName)}`);
+      else execSync(`touch ./${pascalName}/${file.replace(/\$NAME\$/g, pascalName)}`);
 
-      if (isFolder) execSync(`mkdir ${name}/${file.replace(/Placeholder_pascal/g, pascalName)}`);
-      else execSync(`touch ./${name}/${file.replace(/Placeholder_pascal/g, pascalName)}`);
-
-      const data = fs.readFileSync(path.join(__dirname, `/file_package_repo/${newType}/${file}`), fileEncoding);
-      fs.writeFileSync(`./${name}/${file.replace(/Placeholder_pascal/g, pascalName)}`, data.replace(/Placeholder_kebab/g, kebabName).replace(/Placeholder_camel/g, camelName).replace(/Placeholder_pascal/g, pascalName));
+      // read the data from the files and replace template names with argument name
+      const data = fs.readFileSync(path.join(__dirname, `/payloads/${payload}/${file}`), fileEncoding);
+      fs.writeFileSync(
+        `./${name}/${file.replace(/\$NAME\$/g, pascalName)}`,
+        data
+          .replace(/Placeholder_kebab/g, kebabName).replace(/Placeholder_camel/g, camelName)
+          .replace(/\$NAME\$/g, pascalName)
+      );
       resolve();
     });
   });
 }
 
 function finish() {
-  console.log('Finished building.\n');
+  console.log('Finished building');
   process.exit();
 }
 

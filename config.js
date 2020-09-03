@@ -1,5 +1,3 @@
 // Default config
 
-module.exports = {
-  hooks: false,
-};
+module.exports = {};
