@@ -63,20 +63,22 @@ function createComponent({ type: template, name }) {
       const camelName = changeCase.camelCase(name);
       const kebabName = changeCase.paramCase(name);
 
-      console.log(chalk.blue(`Building: ${file.replace(/\$NAME\$/g, pascalName)} ${i}`))
+      console.log(chalk.blue(`Building: ${file.replace(/\$NAME\$/g, name)} ${i}`))
 
       // if folder in template, create the folder
       const isFolder = file.lastIndexOf('.') === -1;
-      if (isFolder) execSync(`mkdir ${pascalName}/${file.replace(/\$NAME\$/g, pascalName)}`);
-      else execSync(`touch ./${pascalName}/${file.replace(/\$NAME\$/g, pascalName)}`);
+      if (isFolder) execSync(`mkdir ${name}/${file.replace(/\$NAME\$/g, name)}`);
+      else execSync(`touch ./${name}/${file.replace(/\$NAME\$/g, name)}`);
 
       // read the data from the files and replace template names with argument name
       const data = fs.readFileSync(path.join(__dirname, `/templates/${template}/${file}`), fileEncoding);
       fs.writeFileSync(
-        `./${name}/${file.replace(/\$NAME\$/g, pascalName)}`,
+        `./${name}/${file.replace(/\$NAME\$/g, name)}`,
         data
-          .replace(/Placeholder_kebab/g, kebabName).replace(/Placeholder_camel/g, camelName)
-          .replace(/\$NAME\$/g, pascalName)
+          .replace(/\$KEBAB_NAME\$/g, kebabName)
+          .replace(/\$CAMEL_NAME\$/g, camelName)
+          .replace(/\$PASCAL_NAME\$/g, pascalName)
+          .replace(/\$NAME\$/g, name)
       );
       resolve();
     });
