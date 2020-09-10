@@ -1,3 +1,5 @@
+> this project is based off this man's work: https://bitbucket.org/richardvanhees/template/src/master/ All I did was tweak it to fit my personal preferences
+
 ## React Templating
 
 ### Installation
