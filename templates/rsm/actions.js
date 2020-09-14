@@ -2,7 +2,7 @@
 import { createErrorPayload } from './helpers'
 import { CLEAR_ASYNC, SET_ERROR, SET_PENDING, SET_SUCCESS } from './types'
 
-export const setPending = id => ({ type: SET_PENDING, id })
-export const setSuccess = id => ({ type: SET_SUCCESS, id })
-export const setError = (id, err) => ({ type: SET_ERROR, id, err: createErrorPayload(err) })
-export const clearAsync = id => ({ type: CLEAR_ASYNC, id })
+export const setPending = (callData) => ({ type: SET_PENDING, callData })
+export const setSuccess = callData => ({ type: SET_SUCCESS, callData })
+export const setError = (err, callData) => ({ type: SET_ERROR, callData, err: createErrorPayload(err) })
+export const clearAsync = callData => ({ type: CLEAR_ASYNC, callData })

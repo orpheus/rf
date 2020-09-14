@@ -2,12 +2,12 @@
 import { createSelector } from 'reselect'
 
 export const selectState = id => createSelector(
-  state => state.StateManager[id],
+  StateManager => StateManager[id],
   (asyncState) => asyncState
 )
 
 export const selectStates = arrayOfIds => createSelector(
-  state => state.StateManager,
+  StateManager => StateManager,
   (StateManager) => {
     return arrayOfIds.reduce((a, c) => {
       a[c] = StateManager[c]
