@@ -1,0 +1,21 @@
+//  -----------------------------------------------
+//  USE ASYNC EFFECT
+//  ~~
+//  COPY BELOW
+//  -----------------------------------------------
+$CALL$: '$CALL$'
+
+useEffect(() => {
+const successMessage = '$SUCCESS$'
+const errorMessage = '$ERROR$'
+
+if ($CALL$?.success) {
+  dispatch(setSnackbar({ variant: 'success', message: t(successMessage) }))
+  dispatch(clearAsync(asyncCalls.$CALL$))
+}
+if ($CALL$?.error) {
+  dispatch(setSnackbar(t(errorMessage)))
+  dispatch(clearAsync(asyncCalls.$CALL$))
+}
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [$CALL$])
