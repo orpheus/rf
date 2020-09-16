@@ -6,26 +6,26 @@ import { createAsyncState, PENDING, SUCCESS, ERROR } from './helpers'
 const initialState = {}
 
 function setPending (state, { callData }) {
+  const { id, ...rest } = callData
   return {
     ...state,
-    ...callData,
-    [callData.id]: createAsyncState(PENDING)
+    [id]: createAsyncState(PENDING, rest)
   }
 }
 
 function setSuccess (state, { callData }) {
+  const { id, ...rest } = callData
   return {
     ...state,
-    ...callData,
-    [callData.id]: createAsyncState(SUCCESS)
+    [id]: createAsyncState(SUCCESS, rest)
   }
 }
 
 function setError (state, { callData, err }) {
+  const { id, ...rest } = callData
   return {
     ...state,
-    ...callData,
-    [callData.id]: createAsyncState(ERROR, err)
+    [id]: createAsyncState(ERROR, { ...err, ...rest })
   }
 }
 
@@ -42,5 +42,6 @@ const reducer = {
   [SET_ERROR]: setError,
   [CLEAR_ASYNC]: clearAsync
 }
+
 export default (state = initialState, action = {}) =>
   reducer[action.type] ? reducer[action.type](state, action) : state

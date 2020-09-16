@@ -12,7 +12,8 @@ export function createAsyncState (type, payload) {
         success: true,
         error: false,
         errorMessage: undefined,
-        errorStatus: undefined
+        errorStatus: undefined,
+        ...payload
       }
     case PENDING:
       return {
@@ -20,15 +21,15 @@ export function createAsyncState (type, payload) {
         success: false,
         error: false,
         errorMessage: undefined,
-        errorStatus: undefined
+        errorStatus: undefined,
+        ...payload
       }
     case ERROR:
       return {
         pending: false,
         success: false,
         error: true,
-        errorMessage: payload.message,
-        errorStatus: payload.status
+        ...payload
       }
     default:
       return {
@@ -49,5 +50,5 @@ export function createErrorPayload (err) {
     message = err.response.data.message
   }
 
-  return { message, status: err.response?.status }
+  return { errorMessage: message, errorStatus: err.response?.status }
 }
