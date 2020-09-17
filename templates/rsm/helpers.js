@@ -52,3 +52,10 @@ export function createErrorPayload (err) {
 
   return { errorMessage: message, errorStatus: err.response?.status }
 }
+
+export function serializeCallData (callData) {
+  if (typeof callData === 'string') {
+    return { id: callData }
+  }
+  return callData
+}
