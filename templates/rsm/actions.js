@@ -6,7 +6,8 @@ import { CLEAR_ASYNC, SET_ERROR, SET_PENDING, SET_SUCCESS } from './types'
 export const setPending = (callData) => ({ type: SET_PENDING, callData: serializeCallData(callData) })
 export const setSuccess = callData => ({ type: SET_SUCCESS, callData: serializeCallData(callData) })
 export const setError = (err, callData) => ({
-  type: SET_ERROR, callData: serializeCallData(callData),
+  type: SET_ERROR,
+  callData: serializeCallData(callData),
   err: createErrorPayload(err)
 })
 export const clearAsync = callData => ({ type: CLEAR_ASYNC, callData: serializeCallData(callData) })
