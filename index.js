@@ -62,6 +62,8 @@ function createComponent({ type: template, name }) {
       const pascalName = changeCase.pascalCase(name);
       const camelName = changeCase.camelCase(name);
       const kebabName = changeCase.paramCase(name);
+      const capitalized = changeCase.upperCaseFirst(name);
+      const lowercase = name.toLowerCase();
 
       console.log(chalk.blue(`Building: ${file.replace(/\$NAME\$/g, name)} ${i}`))
 
@@ -78,6 +80,8 @@ function createComponent({ type: template, name }) {
           .replace(/\$KEBAB_NAME\$/g, kebabName)
           .replace(/\$CAMEL_NAME\$/g, camelName)
           .replace(/\$PASCAL_NAME\$/g, pascalName)
+          .replace(/\$NAME_UNDER\$/g, lowercase)
+          .replace(/\$NAME_CAPITALIZE\$/g, capitalized)
           .replace(/\$NAME\$/g, name)
       );
       resolve();
