@@ -10,7 +10,7 @@ export default {
 
 const Template = (args) => <$NAME$ {...args} />
 
-export const Primary = Template.bind({})j
+export const Primary = Template.bind({})
 Primary.args = {
 
 }

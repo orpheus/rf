@@ -5,4 +5,3 @@ export default makeStyles(theme => {
     root: {}
   }
 }, { name: '$NAME$' })
-
