@@ -4,5 +4,5 @@ export default makeStyles(theme => {
   return {
     root: {}
   }
-}, { name: $NAME$ })
+}, { name: '$NAME$' })
 
